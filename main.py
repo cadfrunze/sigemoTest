@@ -1,5 +1,3 @@
-import random
-
 from selenium import webdriver, common
 from raport import gen_raport
 import time
@@ -10,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
 import random
+from tkinter import messagebox
 
 
 class Testing:
@@ -19,10 +18,11 @@ class Testing:
 
     # settings
     ch_options = webdriver.ChromeOptions()
-    driver: webdriver = webdriver.Chrome(options=ch_options)
     ch_options.add_experimental_option("detach", True)
+    driver: webdriver = webdriver.Chrome(options=ch_options)
+
     driver.maximize_window()
-    asteapta: WebDriverWait = WebDriverWait(driver, 20)
+    asteapta: WebDriverWait = WebDriverWait(driver, 10)
 
     # setup driver inainte de exec. fiecarui ttest_case
     def setup_method(self) -> None:
@@ -35,13 +35,16 @@ class Testing:
         else:
             self.driver.find_element(By.CLASS_NAME, "cc-btn.cc-dismiss").click()
 
+    def teardown_class(self) -> None:
+        time.sleep(3)
+        self.driver.quit()
+
     # search1
     @pytest.mark.test
     def test_case1(self) -> None:
         """test_case_1"""
         expected_rez: str = "Niciun produs nu îndeplineşte criteriile de căutare."
         self.driver.find_element(By.NAME, "search").clear()
-        time.sleep(3)
         self.driver.find_element(By.NAME, "search").send_keys("")
         self.asteapta.until(ec.element_to_be_clickable((By.CLASS_NAME, "search-button")))
         self.driver.find_element(By.CLASS_NAME, "search-button").click()
@@ -59,8 +62,9 @@ class Testing:
         else:
             rezultat_final = "respins".upper()
         print(rezultat_final)
-        time.sleep(5)
         gen_raport(self.test_case1.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case1.__doc__}",
+                            message=f"Am incheiat {self.test_case1.__doc__}\nApasa \"OK\" pt. a continua")
 
     # search2
     @pytest.mark.test
@@ -94,8 +98,9 @@ class Testing:
             pass
             # aici poate sa nu fie pe stoc:)
         print(rezultat_final)
-        time.sleep(5)
         gen_raport(self.test_case2.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case2.__doc__}",
+                            message=f"Am incheiat {self.test_case2.__doc__}\nApasa \"OK\" pt. a continua")
 
     # login1
     @pytest.mark.test
@@ -109,7 +114,7 @@ class Testing:
                                                 "-menu").click()
         self.driver.find_element(By.CLASS_NAME, "menu-item.main-menu-item.main-menu-item-1.multi-level.dropdown.drop"
                                                 "-menu").click()
-        time.sleep(4)
+        time.sleep(2)
         self.asteapta.until(ec.presence_of_element_located((By.ID, "input-email")))
         self.driver.find_element(By.NAME, "email").send_keys("1")
         self.driver.find_element(By.XPATH,
@@ -126,8 +131,9 @@ class Testing:
         except AssertionError:
             rasp_test = "respins".upper()
         print(rasp_test)
-        time.sleep(5)
         gen_raport(self.test_case3.__doc__, rasp_test)
+        messagebox.showinfo(title=f"{self.test_case3.__doc__}",
+                            message=f"Am incheiat {self.test_case3.__doc__}\nApasa \"OK\" pt. a continua")
 
     # login2
     @pytest.mark.test
@@ -162,9 +168,10 @@ class Testing:
             rasp_test = "trecut".upper()
         except AssertionError:
             rasp_test = "respins".upper()
-        time.sleep(5)
         print(rasp_test)
         gen_raport(self.test_case4.__doc__, rasp_test)
+        messagebox.showinfo(title=f"{self.test_case4.__doc__}",
+                            message=f"Am incheiat {self.test_case4.__doc__}\nApasa \"OK\" pt. a continua")
 
     # produse1
     @pytest.mark.test
@@ -183,8 +190,9 @@ class Testing:
         except AssertionError:
             rezultat_final = "respins".upper()
         print(rezultat_final)
-        time.sleep(5)
         gen_raport(self.test_case5.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case5.__doc__}",
+                            message=f"Am incheiat {self.test_case5.__doc__}\nApasa \"OK\" pt. a continua")
 
     # produse2
     @pytest.mark.test
@@ -197,7 +205,8 @@ class Testing:
         self.driver.find_element(By.CLASS_NAME, "refine-name").click()
         while True:
             try:
-                self.driver.find_element(By.XPATH, "/html/body/div[7]/div[2]/div/div/div/div/div/div[1]/div/div/div/div[5]/div")
+                self.driver.find_element(By.XPATH,
+                                         "/html/body/div[7]/div[2]/div/div/div/div/div/div[1]/div/div/div/div[5]/div")
                 break
             except:
                 self.driver.refresh()
@@ -236,8 +245,9 @@ class Testing:
                 continue
         else:
             rezultat_final = "respins".upper()
-        time.sleep(3)
         gen_raport(self.test_case6.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case6.__doc__}",
+                            message=f"Am incheiat {self.test_case6.__doc__}\nApasa \"OK\" pt. a continua")
 
     # locatii
     @pytest.mark.test
@@ -254,5 +264,63 @@ class Testing:
         except AssertionError:
             rezultat_final = "respins".upper()
         print(rezultat_final)
-        time.sleep(3)
         gen_raport(self.test_case7.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case7.__doc__}",
+                            message=f"Am incheiat {self.test_case7.__doc__}\nApasa \"OK\" pt. a continua")
+
+    # servicii
+    @pytest.mark.test
+    def test_case8(self) -> None:
+        """test_case_8"""
+        WebDriverWait(self.driver, 10).until(ec.element_to_be_clickable((By.LINK_TEXT, "Servicii")))
+        self.driver.find_element(By.LINK_TEXT, "Servicii").click()
+        self.driver.find_element(By.LINK_TEXT, "Servicii").click()
+        WebDriverWait(self.driver, 10).until(ec.presence_of_element_located((By.CLASS_NAME,
+                                                                             "module-item.module-item-1.info-blocks.info-blocks-icon")))
+        self.driver.find_element(By.CLASS_NAME, "module-item.module-item-1.info-blocks.info-blocks-icon").click()
+        WebDriverWait(self.driver, 20).until(ec.presence_of_element_located((By.CLASS_NAME, "lazyload.lazyloaded")))
+        try:
+            assert self.driver.find_element(By.CLASS_NAME, "lazyload.lazyloaded").is_displayed()
+            rezultat_final: str = "trecut".upper()
+        except AssertionError:
+            rezultat_final = "respins".upper()
+        print(rezultat_final)
+        gen_raport(self.test_case8.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case8.__doc__}",
+                            message=f"Am incheiat {self.test_case8.__doc__}\nApasa \"OK\" pt. a continua")
+
+    # informatii clienti
+    @pytest.mark.test
+    def test_case9(self) -> None:
+        """test_case_9"""
+        self.driver.find_element(By.CLASS_NAME, "menu-item.top-menu-item.top-menu-item-1").click()
+        try:
+            assert (self.driver.find_element(By.LINK_TEXT, "0364 880 820") and
+                    (self.driver.find_element(By.LINK_TEXT, "0736 404 151")))
+            rezultat_final: str = "trecut".upper()
+        except AssertionError:
+            rezultat_final = "respins".upper()
+        print(rezultat_final)
+        time.sleep(2)
+        gen_raport(self.test_case9.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case9.__doc__}",
+                            message=f"Am incheiat {self.test_case9.__doc__}\nApasa \"OK\" pt. a continua")
+
+    # titlu hankook
+    @pytest.mark.test
+    def test_case10(self) -> None:
+        """test_case_10"""
+        WebDriverWait(self.driver, 40).until(ec.element_to_be_clickable(
+            (By.CLASS_NAME, "module-item.module-item-11.ms-slide.ms-slide-auto-height")))
+
+        if self.driver.find_element(By.CLASS_NAME,
+                                 "module-item.module-item-11.ms-slide.ms-slide-auto-height"):
+            self.driver.find_element(By.CLASS_NAME,
+                                     "module-item.module-item-11.ms-slide.ms-slide-auto-height").click()
+            rezultat_final: str = "trecut".upper()
+        else:
+            rezultat_final = "respins".upper()
+        print(rezultat_final)
+        gen_raport(self.test_case10.__doc__, rezultat_final)
+        messagebox.showinfo(title=f"{self.test_case10.__doc__}",
+                            message=f"Am incheiat ultimul {self.test_case10.__doc__}\nApasa \"OK\" pt. a inchide driverul")

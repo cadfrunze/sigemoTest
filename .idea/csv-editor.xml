@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\rapoarte\test_case_10.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\rapoarte\test_case_2.csv">
           <value>
             <Attribute>
@@ -46,6 +53,20 @@
           </value>
         </entry>
         <entry key="\rapoarte\test_case_7.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\rapoarte\test_case_8.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\rapoarte\test_case_9.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
