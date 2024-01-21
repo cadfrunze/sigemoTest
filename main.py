@@ -306,7 +306,7 @@ class Testing:
         messagebox.showinfo(title=f"{self.test_case9.__doc__}",
                             message=f"Am incheiat {self.test_case9.__doc__}\nApasa \"OK\" pt. a continua")
 
-    # titlu hankook
+    # linkul
     @pytest.mark.test
     def test_case10(self) -> None:
         """test_case_10"""
