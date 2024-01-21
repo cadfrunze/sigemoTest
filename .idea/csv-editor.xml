@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\rapoarte\test_case_7.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

@@ -1,3 +1,5 @@
+import random
+
 from selenium import webdriver, common
 from raport import gen_raport
 import time
@@ -6,6 +8,8 @@ import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from bs4 import BeautifulSoup
+import random
 
 
 class Testing:
@@ -21,8 +25,7 @@ class Testing:
     asteapta: WebDriverWait = WebDriverWait(driver, 20)
 
     # setup driver inainte de exec. fiecarui ttest_case
-
-    def setup_method(self):
+    def setup_method(self) -> None:
         # inainte de exec. fiecarei test_case, tzuca-l tata!
         self.driver.get(self.TARGET)
         try:
@@ -32,9 +35,9 @@ class Testing:
         else:
             self.driver.find_element(By.CLASS_NAME, "cc-btn.cc-dismiss").click()
 
-    # test_case_1
+    # search1
     @pytest.mark.test
-    def test_search1(self) -> None:
+    def test_case1(self) -> None:
         """test_case_1"""
         expected_rez: str = "Niciun produs nu îndeplineşte criteriile de căutare."
         self.driver.find_element(By.NAME, "search").clear()
@@ -57,11 +60,11 @@ class Testing:
             rezultat_final = "respins".upper()
         print(rezultat_final)
         time.sleep(5)
-        gen_raport(self.test_search1.__doc__, rezultat_final)
+        gen_raport(self.test_case1.__doc__, rezultat_final)
 
-    # test_case_2
+    # search2
     @pytest.mark.test
-    def test_search2(self) -> None:
+    def test_case2(self) -> None:
         """test_case_2"""
         rezultat_final: str = ""
         # expected_rez: str = "Niciun produs nu îndeplineşte criteriile de căutare."
@@ -92,11 +95,11 @@ class Testing:
             # aici poate sa nu fie pe stoc:)
         print(rezultat_final)
         time.sleep(5)
-        gen_raport(self.test_search2.__doc__, rezultat_final)
+        gen_raport(self.test_case2.__doc__, rezultat_final)
 
-    # test_case_3
+    # login1
     @pytest.mark.test
-    def test_login1(self) -> None:
+    def test_case3(self) -> None:
         """test_case_3"""
 
         rezult_expect: str = "Eroare: Datele de autentificare sunt greşite!"
@@ -124,11 +127,11 @@ class Testing:
             rasp_test = "respins".upper()
         print(rasp_test)
         time.sleep(5)
-        gen_raport(self.test_login1.__doc__, rasp_test)
+        gen_raport(self.test_case3.__doc__, rasp_test)
 
-    # test_case_4
+    # login2
     @pytest.mark.test
-    def test_login2(self) -> None:
+    def test_case4(self) -> None:
         """test_case_4"""
 
         rezult_expect: str = "Marius Ioan Fodor"
@@ -161,11 +164,11 @@ class Testing:
             rasp_test = "respins".upper()
         time.sleep(5)
         print(rasp_test)
-        gen_raport(self.test_login2.__doc__, rasp_test)
+        gen_raport(self.test_case4.__doc__, rasp_test)
 
-    # test_case_5
+    # produse1
     @pytest.mark.test
-    def test_produse1(self) -> None:
+    def test_case5(self) -> None:
         """test_case_5"""
         self.driver.find_element(By.PARTIAL_LINK_TEXT, "Produse").click()
         self.driver.find_element(By.CLASS_NAME,
@@ -181,22 +184,75 @@ class Testing:
             rezultat_final = "respins".upper()
         print(rezultat_final)
         time.sleep(5)
-        gen_raport(self.test_produse1.__doc__, rezultat_final)
+        gen_raport(self.test_case5.__doc__, rezultat_final)
 
-    # test_case_6
+    # produse2
     @pytest.mark.test
-    def test_produse2(self) -> None:
+    def test_case6(self) -> None:
         """test_case_6"""
         self.driver.find_element(By.PARTIAL_LINK_TEXT, "Produse").click()
         self.driver.find_element(By.CLASS_NAME,
                                  "menu-item.flyout-menu-item.flyout-menu-item-1.dropdown.mega-menu").click()
         self.asteapta.until(ec.presence_of_element_located((By.CLASS_NAME, "refine-name")))
         self.driver.find_element(By.CLASS_NAME, "refine-name").click()
-
-        teste = WebDriverWait(self.driver, 10).until(
-            ec.presence_of_all_elements_located((By.XPATH, "//*[@id=\"top\"]/div/div/div/div/div/div[1]/div/div/div/div[5]"))
-        )
-        elemente = [element.get_attribute("xpath") for element in teste]
-        print(elemente)
-
+        while True:
+            try:
+                self.driver.find_element(By.XPATH, "/html/body/div[7]/div[2]/div/div/div/div/div/div[1]/div/div/div/div[5]/div")
+                break
+            except:
+                self.driver.refresh()
+                continue
+        # De aici incepe GREUL
+        html_content = self.driver.page_source
+        soup = BeautifulSoup(html_content, 'html.parser')
+        option_elements = soup.find_all('option')
+        elemente: list = [x.get("value") for x in option_elements if x.get("value").isnumeric()]
+        incercari: list = []
+        while not (len(incercari) == len(elemente)):
+            zarul = random.choice(elemente)
+            while zarul in incercari:
+                if len(incercari) == (len(elemente) - 1):
+                    for elem1 in elemente:
+                        if elem1 not in incercari:
+                            zarul = elem1
+                            break
+                else:
+                    zarul = random.choice(elemente)
+            incercari.append(zarul)
+            self.driver.get(f'https://www.sigemo.ro/anvelope-turisme?ff4={zarul}')
+            try:
+                lista_produse: list = self.asteapta.until(ec.presence_of_all_elements_located((By.XPATH,
+                                                                                               "/html/body/div[7]/div[3]/div/div/div/div[2]/div[1]/div/div[2]/div[1]/div[1]")))
+                for elem in lista_produse:
+                    print(elem.text)
+                try:
+                    assert len(lista_produse) > 0
+                    rezultat_final = "trecut".upper()
+                except AssertionError:
+                    rezultat_final = "respins".upper()
+                    break
+                break
+            except:
+                continue
+        else:
+            rezultat_final = "respins".upper()
         time.sleep(3)
+        gen_raport(self.test_case6.__doc__, rezultat_final)
+
+    # locatii
+    @pytest.mark.test
+    def test_case7(self) -> None:
+        """test_case_7"""
+        self.asteapta.until(ec.element_to_be_clickable((By.LINK_TEXT, "Locatii")))
+        self.driver.find_element(By.LINK_TEXT, "Locatii").click()
+        self.driver.find_element(By.LINK_TEXT, "Locatii").click()
+        self.asteapta.until(ec.element_to_be_clickable((By.CLASS_NAME, "tab-6")))
+        self.driver.find_element(By.CLASS_NAME, "tab-6").click()
+        try:
+            assert self.asteapta.until(ec.presence_of_element_located((By.CLASS_NAME, "block-image")))
+            rezultat_final: str = "trecut".upper()
+        except AssertionError:
+            rezultat_final = "respins".upper()
+        print(rezultat_final)
+        time.sleep(3)
+        gen_raport(self.test_case7.__doc__, rezultat_final)

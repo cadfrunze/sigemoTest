@@ -15,7 +15,7 @@ def gen_raport(test_case: str, rezultat: str) -> None:
             "Dispozitiv": [socket.gethostname()],
             "Data": [data],
             "Ora": [ora],
-            "Tester": ["Fodor Marius Ioan".upper()],
+            "Tester": ["FMI".upper()],
             "Status": [rezultat]
 
         }
@@ -34,7 +34,7 @@ def gen_raport(test_case: str, rezultat: str) -> None:
         new_list_ora.append(ora)
 
         new_list_tester: list = datele1.Tester.to_list()
-        new_list_tester.append("Fodor Marius Ioan".upper())
+        new_list_tester.append("FMI".upper())
 
         new_list_status: list = datele1.Status.to_list()
         new_list_status.append(rezultat)
