@@ -1,5 +1,4 @@
 from selenium import webdriver, common
-from selenium.webdriver.remote.webelement import WebElement
 from raport import gen_raport
 import time
 import os
@@ -7,7 +6,6 @@ import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-import random
 
 
 class Testing:
@@ -189,28 +187,16 @@ class Testing:
     @pytest.mark.test
     def test_produse2(self) -> None:
         """test_case_6"""
-        latimile: list = []
         self.driver.find_element(By.PARTIAL_LINK_TEXT, "Produse").click()
         self.driver.find_element(By.CLASS_NAME,
                                  "menu-item.flyout-menu-item.flyout-menu-item-1.dropdown.mega-menu").click()
         self.asteapta.until(ec.presence_of_element_located((By.CLASS_NAME, "refine-name")))
         self.driver.find_element(By.CLASS_NAME, "refine-name").click()
 
-        self.asteapta.until(ec.presence_of_element_located(
-            (By.CSS_SELECTOR, "#filter-65ab7c6867065-collapse-5 > div > div > label > select")))
-        elemente: list = self.asteapta.until(ec.presence_of_all_elements_located(
-            (By.CSS_SELECTOR, "#filter-65ab7c6867065-collapse-5 > div > div > label > select")))
-        valoare: str = ''
-        for elem1 in elemente:
-            valoare += elem1.text
-        list_elem = valoare.split(" ")
-        print(list_elem)
-        my_element = WebElement(self.driver, f"{random.choice(list_elem)}")
-        print(my_element.get_attribute("XPATH"))
-        element_path = my_element.get_attribute("class")
-        print(element_path)
+        teste = WebDriverWait(self.driver, 10).until(
+            ec.presence_of_all_elements_located((By.XPATH, "//*[@id=\"top\"]/div/div/div/div/div/div[1]/div/div/div/div[5]"))
+        )
+        elemente = [element.get_attribute("xpath") for element in teste]
+        print(elemente)
 
-        # self.driver.find_element(By.CLASS_NAME, 'module-item.module-item-f4.panel.panel-active').click()
-        # self.asteapta.until(ec.presence_of_all_elements_located((By.CLASS_NAME, "module-item.module-item-f4.panel.panel-active")))
-        # self.driver.find_element(By.LINK_TEXT, f"{random.choice(latimile)}")
-        time.sleep(10)
+        time.sleep(3)
