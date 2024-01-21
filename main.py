@@ -214,19 +214,3 @@ class Testing:
         # self.asteapta.until(ec.presence_of_all_elements_located((By.CLASS_NAME, "module-item.module-item-f4.panel.panel-active")))
         # self.driver.find_element(By.LINK_TEXT, f"{random.choice(latimile)}")
         time.sleep(10)
-
-        # elem_str = elem_str.replace("\n", "")
-        # elem_str = elem_str.replace("Latime", "")
-        # elem_str = elem_str.format()
-        # print(elem_str)
-        # # anunturi: list = self.asteapta.until(ec.presence_of_all_elements_located((By.CLASS_NAME, "name")))
-        # # # for elem in anunturi:
-        # # #     print(elem.text)
-        # # try:
-        # #     assert len(anunturi) > 0
-        # #     rezultat_final: str = "trecut".upper()
-        # # except AssertionError:
-        # #     rezultat_final = "respins".upper()
-        # # print(rezultat_final)
-        # # time.sleep(5)
-        # # gen_raport(self.test_produse2.__doc__, rezultat_final)
