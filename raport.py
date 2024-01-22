@@ -4,7 +4,6 @@ import datetime
 from tkinter import *
 
 
-
 def gen_raport(test_case: str, rezultat: str) -> None:
     data: str = datetime.datetime.now().strftime("%d/%m/%Y")
     ora: str = datetime.datetime.now().strftime("%H:%M:%S")
