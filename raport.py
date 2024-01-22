@@ -55,12 +55,13 @@ def pop_up(nr_test: str, rezultat: str, last: bool) -> None:
     while True:
         try:
             from tkinter import messagebox
-            break
         except TclError:
             continue
-    if last is True:
-        messagebox.showinfo(title=f"{nr_test}",
-                            message=f"Am incheiat ultimul {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a inchide driverul")
-    else:
-        messagebox.showinfo(title=f"{nr_test}",
-                            message=f"Am incheiat {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a continua")
+        else:
+            if last is True:
+                messagebox.showinfo(title=f"{nr_test}",
+                                    message=f"Am incheiat ultimul {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a inchide driverul")
+            else:
+                messagebox.showinfo(title=f"{nr_test}",
+                                    message=f"Am incheiat {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a continua")
+            break
