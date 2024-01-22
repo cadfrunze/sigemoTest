@@ -12,7 +12,7 @@ from tkinter import messagebox
 
 
 class Testing:
-    TARGET: str = "https://www.sigemo.ro/"
+    TARGET: str = os.getenv("target")
     USER: str = os.getenv("user_sigemo")
     PASS: str = os.getenv("pass_sigemo")
 
@@ -24,7 +24,7 @@ class Testing:
     driver.maximize_window()
     asteapta: WebDriverWait = WebDriverWait(driver, 10)
 
-    # setup driver inainte de exec. fiecarui ttest_case
+    # setup driver inainte de exec. fiecarui test_case
     def setup_method(self) -> None:
         # inainte de exec. fiecarei test_case, tzuca-l tata!
         self.driver.get(self.TARGET)
