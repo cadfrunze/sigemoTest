@@ -1,6 +1,7 @@
 import pandas as pd
 import socket
 import datetime
+from tkinter import messagebox
 
 
 def gen_raport(test_case: str, rezultat: str) -> None:
@@ -48,3 +49,12 @@ def gen_raport(test_case: str, rezultat: str) -> None:
         }
         df = pd.DataFrame(new_dates)
         df.to_csv(f"./rapoarte/{test_case}.csv", index=False)
+
+
+def pop_up(nr_test: str, rezultat: str, last: bool) -> None:
+    if last is True:
+        messagebox.showinfo(title=f"{nr_test}",
+                            message=f"Am incheiat ultimul {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a inchide driverul")
+    else:
+        messagebox.showinfo(title=f"{nr_test}",
+                            message=f"Am incheiat {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a continua")

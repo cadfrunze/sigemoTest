@@ -1,5 +1,5 @@
 from selenium import webdriver, common
-from raport import gen_raport
+from raport import gen_raport, pop_up
 import time
 import os
 import pytest
@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
 import random
-from tkinter import messagebox
+
 
 
 class Testing:
@@ -63,8 +63,7 @@ class Testing:
             rezultat_final = "respins".upper()
         print(rezultat_final)
         gen_raport(self.test_case1.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case1.__doc__}",
-                            message=f"Am incheiat {self.test_case1.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case1.__doc__, rezultat_final, False)
 
     # search2
     @pytest.mark.test
@@ -99,8 +98,7 @@ class Testing:
             # aici poate sa nu fie pe stoc:)
         print(rezultat_final)
         gen_raport(self.test_case2.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case2.__doc__}",
-                            message=f"Am incheiat {self.test_case2.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case2.__doc__, rezultat_final, False)
 
     # login1
     @pytest.mark.test
@@ -132,8 +130,7 @@ class Testing:
             rasp_test = "respins".upper()
         print(rasp_test)
         gen_raport(self.test_case3.__doc__, rasp_test)
-        messagebox.showinfo(title=f"{self.test_case3.__doc__}",
-                            message=f"Am incheiat {self.test_case3.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case3.__doc__, rasp_test, False)
 
     # login2
     @pytest.mark.test
@@ -170,8 +167,7 @@ class Testing:
             rasp_test = "respins".upper()
         print(rasp_test)
         gen_raport(self.test_case4.__doc__, rasp_test)
-        messagebox.showinfo(title=f"{self.test_case4.__doc__}",
-                            message=f"Am incheiat {self.test_case4.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case4.__doc__, rasp_test, False)
 
     # produse1
     @pytest.mark.test
@@ -191,8 +187,7 @@ class Testing:
             rezultat_final = "respins".upper()
         print(rezultat_final)
         gen_raport(self.test_case5.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case5.__doc__}",
-                            message=f"Am incheiat {self.test_case5.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case5.__doc__, rezultat_final, False)
 
     # produse2
     @pytest.mark.test
@@ -246,8 +241,7 @@ class Testing:
         else:
             rezultat_final = "respins".upper()
         gen_raport(self.test_case6.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case6.__doc__}",
-                            message=f"Am incheiat {self.test_case6.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case6.__doc__, rezultat_final, False)
 
     # locatii
     @pytest.mark.test
@@ -265,8 +259,7 @@ class Testing:
             rezultat_final = "respins".upper()
         print(rezultat_final)
         gen_raport(self.test_case7.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case7.__doc__}",
-                            message=f"Am incheiat {self.test_case7.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case7.__doc__, rezultat_final, False)
 
     # servicii
     @pytest.mark.test
@@ -286,8 +279,7 @@ class Testing:
             rezultat_final = "respins".upper()
         print(rezultat_final)
         gen_raport(self.test_case8.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case8.__doc__}",
-                            message=f"Am incheiat {self.test_case8.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case8.__doc__, rezultat_final, False)
 
     # informatii clienti
     @pytest.mark.test
@@ -303,24 +295,25 @@ class Testing:
         print(rezultat_final)
         time.sleep(2)
         gen_raport(self.test_case9.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case9.__doc__}",
-                            message=f"Am incheiat {self.test_case9.__doc__}\nApasa \"OK\" pt. a continua")
+        pop_up(self.test_case9.__doc__, rezultat_final, False)
 
     # linkul
     @pytest.mark.test
     def test_case10(self) -> None:
         """test_case_10"""
-        WebDriverWait(self.driver, 40).until(ec.element_to_be_clickable(
-            (By.CLASS_NAME, "module-item.module-item-11.ms-slide.ms-slide-auto-height")))
-
-        if self.driver.find_element(By.CLASS_NAME,
-                                 "module-item.module-item-11.ms-slide.ms-slide-auto-height"):
-            self.driver.find_element(By.CLASS_NAME,
-                                     "module-item.module-item-11.ms-slide.ms-slide-auto-height").click()
-            rezultat_final: str = "trecut".upper()
-        else:
+        try:
+            WebDriverWait(self.driver, 40).until(ec.element_to_be_clickable(
+                (By.CLASS_NAME, "module-item.module-item-11.ms-slide.ms-slide-auto-height")))
+        except common.exceptions.TimeoutException:
             rezultat_final = "respins".upper()
+        else:
+            if self.driver.find_element(By.CLASS_NAME,
+                                     "module-item.module-item-11.ms-slide.ms-slide-auto-height"):
+                self.driver.find_element(By.CLASS_NAME,
+                                         "module-item.module-item-11.ms-slide.ms-slide-auto-height").click()
+                rezultat_final: str = "trecut".upper()
+            else:
+                rezultat_final = "respins".upper()
         print(rezultat_final)
         gen_raport(self.test_case10.__doc__, rezultat_final)
-        messagebox.showinfo(title=f"{self.test_case10.__doc__}",
-                            message=f"Am incheiat ultimul {self.test_case10.__doc__}\nApasa \"OK\" pt. a inchide driverul")
+        pop_up(self.test_case10.__doc__, rezultat_final, True)
