@@ -1,7 +1,8 @@
 import pandas as pd
 import socket
 import datetime
-from tkinter import messagebox
+from tkinter import *
+
 
 
 def gen_raport(test_case: str, rezultat: str) -> None:
@@ -52,6 +53,12 @@ def gen_raport(test_case: str, rezultat: str) -> None:
 
 
 def pop_up(nr_test: str, rezultat: str, last: bool) -> None:
+    while True:
+        try:
+            from tkinter import messagebox
+            break
+        except TclError:
+            continue
     if last is True:
         messagebox.showinfo(title=f"{nr_test}",
                             message=f"Am incheiat ultimul {nr_test}\nTestul este: {rezultat}\nApasa \"OK\" pt. a inchide driverul")

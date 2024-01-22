@@ -10,7 +10,6 @@ from bs4 import BeautifulSoup
 import random
 
 
-
 class Testing:
     TARGET: str = os.getenv("target")
     USER: str = os.getenv("user_sigemo")
@@ -308,7 +307,7 @@ class Testing:
             rezultat_final = "respins".upper()
         else:
             if self.driver.find_element(By.CLASS_NAME,
-                                     "module-item.module-item-11.ms-slide.ms-slide-auto-height"):
+                                        "module-item.module-item-11.ms-slide.ms-slide-auto-height"):
                 self.driver.find_element(By.CLASS_NAME,
                                          "module-item.module-item-11.ms-slide.ms-slide-auto-height").click()
                 rezultat_final: str = "trecut".upper()
