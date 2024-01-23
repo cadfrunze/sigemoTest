@@ -52,7 +52,7 @@ def gen_raport(test_case: str, rezultat: str) -> None:
 
 
 def pop_up(nr_test: str, rezultat: str, last: bool) -> None:
-    while True:
+    for _ in range(3):
         try:
             from tkinter import messagebox
         except TclError:
