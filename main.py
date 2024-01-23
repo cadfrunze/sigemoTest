@@ -38,7 +38,7 @@ class Testing:
         time.sleep(3)
         self.driver.quit()
 
-    # search1
+    # search1 case 1
     @pytest.mark.test
     def test_case1(self) -> None:
         """test_case_1"""
@@ -64,7 +64,7 @@ class Testing:
         gen_raport(self.test_case1.__doc__, rezultat_final)
         pop_up(self.test_case1.__doc__, rezultat_final, False)
 
-    # search2
+    # search2 case 2
     @pytest.mark.test
     def test_case2(self) -> None:
         """test_case_2"""
@@ -99,7 +99,7 @@ class Testing:
         gen_raport(self.test_case2.__doc__, rezultat_final)
         pop_up(self.test_case2.__doc__, rezultat_final, False)
 
-    # login1
+    # login1 case 3
     @pytest.mark.test
     def test_case3(self) -> None:
         """test_case_3"""
@@ -131,7 +131,7 @@ class Testing:
         gen_raport(self.test_case3.__doc__, rasp_test)
         pop_up(self.test_case3.__doc__, rasp_test, False)
 
-    # login2
+    # login2 case 4
     @pytest.mark.test
     def test_case4(self) -> None:
         """test_case_4"""
@@ -168,7 +168,7 @@ class Testing:
         gen_raport(self.test_case4.__doc__, rasp_test)
         pop_up(self.test_case4.__doc__, rasp_test, False)
 
-    # produse1
+    # produse1 case 5
     @pytest.mark.test
     def test_case5(self) -> None:
         """test_case_5"""
@@ -188,7 +188,7 @@ class Testing:
         gen_raport(self.test_case5.__doc__, rezultat_final)
         pop_up(self.test_case5.__doc__, rezultat_final, False)
 
-    # produse2
+    # produse2 case 6
     @pytest.mark.test
     def test_case6(self) -> None:
         """test_case_6"""
@@ -242,7 +242,7 @@ class Testing:
         gen_raport(self.test_case6.__doc__, rezultat_final)
         pop_up(self.test_case6.__doc__, rezultat_final, False)
 
-    # locatii
+    # locatii case 7
     @pytest.mark.test
     def test_case7(self) -> None:
         """test_case_7"""
@@ -260,7 +260,7 @@ class Testing:
         gen_raport(self.test_case7.__doc__, rezultat_final)
         pop_up(self.test_case7.__doc__, rezultat_final, False)
 
-    # servicii
+    # servicii case 8
     @pytest.mark.test
     def test_case8(self) -> None:
         """test_case_8"""
@@ -280,7 +280,7 @@ class Testing:
         gen_raport(self.test_case8.__doc__, rezultat_final)
         pop_up(self.test_case8.__doc__, rezultat_final, False)
 
-    # informatii clienti
+    # informatii clienti case 9
     @pytest.mark.test
     def test_case9(self) -> None:
         """test_case_9"""
@@ -296,7 +296,7 @@ class Testing:
         gen_raport(self.test_case9.__doc__, rezultat_final)
         pop_up(self.test_case9.__doc__, rezultat_final, False)
 
-    # linkul
+    # linkul case 10
     @pytest.mark.test
     def test_case10(self) -> None:
         """test_case_10"""

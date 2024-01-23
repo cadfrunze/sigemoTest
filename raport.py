@@ -1,7 +1,7 @@
 import pandas as pd
 import socket
 import datetime
-from tkinter import *
+from tkinter import TclError
 
 
 def gen_raport(test_case: str, rezultat: str) -> None:
