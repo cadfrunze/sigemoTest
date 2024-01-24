@@ -122,6 +122,7 @@ class Testing:
         self.asteapta.until(ec.presence_of_element_located((By.CLASS_NAME, "alert.alert-danger.alert-dismissible")))
 
         raspuns = self.driver.find_element(By.CLASS_NAME, "alert.alert-danger.alert-dismissible")
+        # print(type(raspuns.text))
         try:
             assert rezult_expect == raspuns.text
             rasp_test = "trecut".upper()
@@ -286,13 +287,12 @@ class Testing:
         """test_case_9"""
         self.driver.find_element(By.CLASS_NAME, "menu-item.top-menu-item.top-menu-item-1").click()
         try:
-            assert (self.driver.find_element(By.LINK_TEXT, "0364 880 820") and
-                    (self.driver.find_element(By.LINK_TEXT, "0736 404 151")))
+            assert (self.driver.find_element(By.LINK_TEXT, "0364 880 820").is_displayed() and
+                    (self.driver.find_element(By.LINK_TEXT, "0736 404 151"))).is_displayed()
             rezultat_final: str = "trecut".upper()
         except AssertionError:
             rezultat_final = "respins".upper()
         print(rezultat_final)
-        time.sleep(2)
         gen_raport(self.test_case9.__doc__, rezultat_final)
         pop_up(self.test_case9.__doc__, rezultat_final, False)
 
@@ -316,3 +316,5 @@ class Testing:
         print(rezultat_final)
         gen_raport(self.test_case10.__doc__, rezultat_final)
         pop_up(self.test_case10.__doc__, rezultat_final, True)
+
+
